@@ -2,6 +2,8 @@ import { createUser } from "@/redux/features/userSlice"
 import Link from "next/link"
 import { SetStateAction, useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
+import loading from "../../../public/loadingGIF.gif"
+import Image from "next/image"
 
 type Props = {
     widthType: string | undefined
@@ -12,6 +14,7 @@ const SignUpForm = (props: Props) => {
     const [userName, setUserName] = useState<string>()
     const [userEmail, setUserEmail] = useState<string>()
     const [userPass, setUserPass] = useState<string>()
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const dispatch = useDispatch()
 
     const handleCheckWidth = () => {
@@ -40,6 +43,10 @@ const SignUpForm = (props: Props) => {
             user_pass: userPass,
             avatar_url: ""
         }))
+        setUserName("")
+        setUserEmail("")
+        setUserPass("")
+        setIsLoading(true)
     }
 
     useEffect(() => handleCheckWidth())
@@ -75,6 +82,11 @@ const SignUpForm = (props: Props) => {
                         <i className="fa-solid fa-arrow-left text-xl"></i>
                         <h3 className="px-2">Back to home</h3>
                     </Link>
+                    {isLoading && 
+                        <div>
+                            <Image src={loading} alt="loading gif" className="h-7 w-7"/>
+                        </div>
+                    }
                     <button type="submit" className="flex items-center">
                         <h3 className="px-2">Sign Up</h3>
                         <i className="fa-solid fa-arrow-right text-xl"></i>

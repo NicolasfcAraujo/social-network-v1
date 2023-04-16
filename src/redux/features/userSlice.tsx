@@ -32,7 +32,7 @@ export const slice = createSlice({
                 user_pass: action.payload.user_pass,
                 avatar_url: action.payload.avatar_url
             }
-            axios.post(url, user).then(() => window.location.reload()).catch(
+            axios.post(url, user).then(() => window.location.replace("/")).catch(
                 (error) => console.log(error)
             )
         }

@@ -1,6 +1,7 @@
 import SignUpForm from "@/components/SignUpForm/SignUpForm"
 import { useEffect, useState } from "react"
 
+
 type screenType = "smartphone" | "tablet" | "desktop" 
 
 const index = () => {
@@ -30,7 +31,7 @@ const index = () => {
             </h1>
           }
         </div>
-        <div className=" bg-white h-full px-6 py-2">
+        <div className=" bg-white h-full px-6 py-4">
           {widthSize === "desktop" ||
             <h1 className="text-5xl font-medium" id="logo">
               social network
