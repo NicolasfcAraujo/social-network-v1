@@ -11,14 +11,19 @@ type UserType = {
     avatar_url: string | undefined
 }
 
+type UserLogin = {
+    user_email: string | undefined,
+    user_pass: string | undefined
+}
+
 const url = "https://social-network-api-b728.onrender.com/api/users"
 
 export const slice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        changeUser: (state, action: PayloadAction<string>) => {
-            state.name = action.payload
+        login: (state, action: PayloadAction<UserLogin>) => {
+            state.name = action.payload.
             state.isLogged = true
         },
         logout: (state) => {
@@ -39,5 +44,5 @@ export const slice = createSlice({
     }
 })
 
-export const { changeUser, logout, createUser } = slice.actions
+export const { login, logout, createUser } = slice.actions
 export default slice.reducer
