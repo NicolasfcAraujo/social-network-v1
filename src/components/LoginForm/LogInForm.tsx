@@ -50,7 +50,7 @@ const LogInForm = (props: Props) => {
     return (
         <div style={{height: `calc(100vh - ${formHeight}px)`}} className="pb-6">
             <div className="h-1/6">
-                <h2 className="font-medium text-3xl">Sign Up</h2>
+                <h2 className="font-medium text-3xl">Login</h2>
             </div>
             <form className="flex flex-col justify-between h-5/6" onSubmit={handleSubmit}>
                 <div>
@@ -74,7 +74,7 @@ const LogInForm = (props: Props) => {
                         </div>
                     }
                     <button type="submit" className="flex items-center">
-                        <h3 className="px-2">Sign Up</h3>
+                        <h3 className="px-2">Login</h3>
                         <i className="fa-solid fa-arrow-right text-xl"></i>
                     </button>
                 </div>

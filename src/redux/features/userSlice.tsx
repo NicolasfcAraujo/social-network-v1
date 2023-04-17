@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
-type SliceState = { name: String, isLogged: Boolean}
+type SliceState = { name: String | undefined, isLogged: Boolean}
 const initialState: SliceState = { name: "", isLogged: false }
 
 type UserType = {
@@ -23,8 +23,18 @@ export const slice = createSlice({
     initialState,
     reducers: {
         login: (state, action: PayloadAction<UserLogin>) => {
-            state.name = action.payload.
+            const userLogin = {
+                user_email: action.payload.user_email,
+                user_pass: action.payload.user_pass
+            }
+            console.log(userLogin)
+            state.name = action.payload.user_email
             state.isLogged = true
+            axios.post(`${url}/login`, userLogin).then(
+                () => window.location.replace("/")
+            ).catch(
+                (error) => console.log(error)
+            )
         },
         logout: (state) => {
             state.name = ""
