@@ -28,13 +28,8 @@ export const slice = createSlice({
                 user_pass: action.payload.user_pass
             }
             console.log(userLogin)
-            state.name = action.payload.user_email
-            state.isLogged = true
-            axios.post(`${url}/login`, userLogin).then(
-                () => window.location.replace("/")
-            ).catch(
-                (error) => console.log(error)
-            )
+            const serverLogin = axios.post(`${url}/login`, userLogin)
+            console.log(serverLogin)
         },
         logout: (state) => {
             state.name = ""
