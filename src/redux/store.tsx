@@ -9,7 +9,7 @@ const persistConfig = {
     storage
 }
 
-const reducer = combineReducers({
+export const reducer = combineReducers({
     user: userSlice
 })
 
@@ -20,3 +20,5 @@ const store = configureStore({
 })
 
 export default store
+
+export type RootState = ReturnType<typeof store.getState>

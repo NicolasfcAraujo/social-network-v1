@@ -1,8 +1,8 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
-type SliceState = { name: String | undefined, isLogged: Boolean}
-const initialState: SliceState = { name: "", isLogged: false }
+export type SliceState = { name: String | undefined, user_email: string | undefined, isLogged: Boolean, exp: number}
+const initialState: SliceState = { name: "", user_email: "",isLogged: false, exp: 0 }
 
 type UserType = {
     user_name: string | undefined,
@@ -18,21 +18,29 @@ type UserLogin = {
 
 const url = "https://social-network-api-b728.onrender.com/api/users"
 
+export const loginAsync = createAsyncThunk(
+    "user/login", 
+    async (body) => {
+        const serverLogin = await axios.post(`${url}/login`, body)
+        console.log(serverLogin)
+        return serverLogin
+    }
+)
+
 export const slice = createSlice({
     name: "user",
     initialState,
     reducers: {
-        login: (state, action: PayloadAction<UserLogin>) => {
-            const userLogin = {
-                user_email: action.payload.user_email,
-                user_pass: action.payload.user_pass
-            }
-            console.log(userLogin)
-            const serverLogin = axios.post(`${url}/login`, userLogin)
-            console.log(serverLogin)
+        changeUser: (state, action) => {
+            state.isLogged = true
+            state.name = action.payload.user_name
+            state.user_email = action.payload.user_email,
+            state.exp = action.payload.exp
+            console.log(state.isLogged, state.name, state.user_email)
         },
         logout: (state) => {
             state.name = ""
+            state.user_email = ""
             state.isLogged = false
         }, 
         createUser: (state, action: PayloadAction<UserType>) => {
@@ -46,8 +54,14 @@ export const slice = createSlice({
                 (error) => console.log(error)
             )
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(loginAsync.fulfilled, (state, action) => {
+            state.isLogged = true
+            console.log(action.payload)
+        })
     }
 })
 
-export const { login, logout, createUser } = slice.actions
+export const { changeUser, logout, createUser } = slice.actions
 export default slice.reducer
