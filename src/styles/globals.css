@@ -13,3 +13,61 @@
 #__next {
   overflow: hidden;
 }
+
+.backgroundAnimation {
+  animation-name: animation;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes animation {
+  0% {
+    position: fixed;
+    left: 0;
+    width: 100%;
+  }
+
+  100% {
+    position: fixed;
+    left: 0;
+    width: 0%
+  }
+}
+
+.bgBlackAnimation {
+  animation-name: animationBlack;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes animationBlack {
+  0% {
+    position: fixed;
+    right: 0;
+    width: 0%;
+    height: 100%;
+  }
+
+  100% {
+    position: fixed;
+    right: 0;
+    width: 100%;
+    height: 100%
+  }
+}
+
+.textAnimation {
+  animation-name: animationText;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes animationText {
+  0% {
+    color: black;
+  }
+
+  100% {
+    color: white;
+  }
+}
