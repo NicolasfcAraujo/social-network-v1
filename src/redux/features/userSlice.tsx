@@ -41,6 +41,7 @@ export const slice = createSlice({
         logout: (state) => {
             state.name = ""
             state.user_email = ""
+            state.exp = 0
             state.isLogged = false
         }, 
         createUser: (state, action: PayloadAction<UserType>) => {

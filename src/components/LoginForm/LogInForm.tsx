@@ -59,7 +59,7 @@ const LogInForm = (props: Props) => {
         dispatch(changeUser({user_name: JSON.parse(serverLogin.request.response).user.user_name,
                              user_email: JSON.parse(serverLogin.request.response).user.user_email,
                              exp: response.data.decoded.exp}))
-        
+            
         router.push("/home")
         }
 
