@@ -1,8 +1,8 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
-export type SliceState = { name: String | undefined, user_email: string | undefined, isLogged: Boolean, exp: number}
-const initialState: SliceState = { name: "", user_email: "",isLogged: false, exp: 0 }
+export type SliceState = { name: String | undefined, user_email: string | undefined, isLogged: Boolean, exp: number, id: string, chats: string[]}
+const initialState: SliceState = { name: "", user_email: "",isLogged: false, exp: 0, id: "", chats: []}
 
 type UserType = {
     user_name: string | undefined,
@@ -36,6 +36,8 @@ export const slice = createSlice({
             state.name = action.payload.user_name
             state.user_email = action.payload.user_email,
             state.exp = action.payload.exp
+            state.id = action.payload._id
+            state.chats = action.payload.chats
             console.log(state.isLogged, state.name, state.user_email)
         },
         logout: (state) => {
@@ -54,6 +56,9 @@ export const slice = createSlice({
             axios.post(url, user).then(() => window.location.replace("/")).catch(
                 (error) => console.log(error)
             )
+        },
+        addChat: (state, action) => {
+            state.chats = [...state.chats, action.payload]
         }
     },
     extraReducers: (builder) => {
@@ -64,5 +69,5 @@ export const slice = createSlice({
     }
 })
 
-export const { changeUser, logout, createUser } = slice.actions
+export const { changeUser, logout, createUser, addChat } = slice.actions
 export default slice.reducer

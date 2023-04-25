@@ -40,10 +40,11 @@ const LogInForm = (props: Props) => {
 
     const handleSubmit = async (e: { preventDefault: () => void }) => {
         e.preventDefault()
+        setIsLoading(true)
         const loginBody = {
             user_email: userEmail,
             user_pass: userPass 
-        }
+        } 
         console.log(loginBody)
         const serverLogin = await axios.post(`${url}/login`, loginBody)
 
@@ -56,9 +57,13 @@ const LogInForm = (props: Props) => {
             setError("Authentication error")
         }
         
+        console.log(JSON.parse(serverLogin.request.response).user.chats.map((chat: any) => {return chat.anotherUser_email}))
+
         dispatch(changeUser({user_name: JSON.parse(serverLogin.request.response).user.user_name,
                              user_email: JSON.parse(serverLogin.request.response).user.user_email,
-                             exp: response.data.decoded.exp}))
+                             exp: response.data.decoded.exp,
+                             _id: JSON.parse(serverLogin.request.response).user._id,
+                             chats: JSON.parse(serverLogin.request.response).user.chats.map((chat: any) => {return chat.anotherUser_email})}))
             
         router.push("/home")
         }

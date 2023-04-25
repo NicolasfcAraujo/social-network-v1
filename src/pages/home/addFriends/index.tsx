@@ -3,6 +3,7 @@ import { RootState } from "@/redux/store"
 import { useRouter } from "next/router"
 import { useEffect } from "react"
 import Menu from "@/components/Menu/Menu"
+import AddFriendComponent from "@/components/AddFriendComponent/AddFriendComponent"
 
 const index = () => {
     const { name } = useSelector((state: RootState) => state.user)
@@ -17,9 +18,7 @@ const index = () => {
     return (
         <main style={{display: "grid", gridTemplateColumns: "300px 1fr"}}>
             <Menu/>
-            <section>
-
-            </section>
+            <AddFriendComponent/>
         </main>
     )
 }
