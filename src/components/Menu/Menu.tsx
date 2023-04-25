@@ -4,6 +4,7 @@ import { logout } from "@/redux/features/userSlice"
 import { useRouter } from "next/router"
 import axios, { AxiosResponse } from "axios"
 import { useState, useEffect } from "react"
+import Link from "next/link"
 
 
 const Menu = () => {
@@ -41,10 +42,12 @@ const Menu = () => {
                 <div>
                     {userContacts!.map((chat: any) => {
                         return (
-                            <article className=" border-b border-slate-200 h-24 px-6 py-4">
-                                <h1 className=" text-lg font-medium">{chat.anotherUser}</h1>
-                                <h2>{chat.anotherUser_email}</h2>
-                            </article>
+                            <Link href={`/home/${chat.anotherUser_email}`}>
+                                <article className=" border-b border-slate-200 h-24 px-6 py-4">
+                                    <h1 className=" text-lg font-medium">{chat.anotherUser}</h1>
+                                    <h2>{chat.anotherUser_email}</h2>
+                                </article>
+                            </Link>    
                         )
                     })}
                 </div>
