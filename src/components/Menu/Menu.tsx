@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/redux/store"
-import { logout } from "@/redux/features/userSlice"
+import { changeChat, logout } from "@/redux/features/userSlice"
 import { useRouter } from "next/router"
 import axios, { AxiosResponse } from "axios"
 import { useState, useEffect } from "react"
@@ -42,12 +42,13 @@ const Menu = () => {
                 <div>
                     {userContacts!.map((chat: any) => {
                         return (
-                            <Link href={`/home/${chat.anotherUser_email}`}>
-                                <article className=" border-b border-slate-200 h-24 px-6 py-4">
-                                    <h1 className=" text-lg font-medium">{chat.anotherUser}</h1>
-                                    <h2>{chat.anotherUser_email}</h2>
-                                </article>
-                            </Link>    
+                            <article className=" border-b border-slate-200 h-24 px-6 py-4" onClick={() => {
+                                dispatch(changeChat({anotherUser: chat.anotherUser, anotherEmail: chat.anotherUser_email}))
+                                router.push(`/home/${chat.anotherUser_email}`)
+                            }}>
+                                <h1 className=" text-lg font-medium">{chat.anotherUser}</h1>
+                                <h2>{chat.anotherUser_email}</h2>
+                            </article>  
                         )
                     })}
                 </div>

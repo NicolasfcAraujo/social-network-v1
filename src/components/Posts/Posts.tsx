@@ -6,7 +6,7 @@ const Posts = () => {
         <div style={{height: "calc(100vh - 57.6px)"}} className=" overflow-y-scroll">
 
         </div>
-        <TextSpace/>
+        <TextSpace submitType="home"/>
     </section>
   )
 }
