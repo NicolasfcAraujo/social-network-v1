@@ -26,7 +26,7 @@ const TextSpace = (props: Props) => {
     } else if (props.submitType === "chat"){
       console.log("enviando para chat")
       axios.get(`${url}`).then((data) => {
-        console.log(data.data.filter((user: any) => user.user_email === router.query.chatEmail)[0]._id)
+        console.log(`${url}/${id}/sendMessageTo/${data.data.filter((user: any) => user.user_email === router.query.chatEmail)[0]._id}`)
         axios.put(`${url}/${id}/sendMessageTo/${data.data.filter((user: any) => user.user_email === router.query.chatEmail)[0]._id}`, { text: value, who: id }).then(() => {
           setValue("")
           console.log({ text: value, who: id })

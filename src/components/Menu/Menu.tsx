@@ -1,14 +1,15 @@
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/redux/store"
-import { changeChat, logout } from "@/redux/features/userSlice"
+import { changeChat, logout, actualMessages, setLoadingTrue, setLoadingFalse } from "@/redux/features/userSlice"
 import { useRouter } from "next/router"
 import axios, { AxiosResponse } from "axios"
 import { useState, useEffect } from "react"
 import Link from "next/link"
 
+const url = "https://social-network-api-b728.onrender.com/api/users"
 
 const Menu = () => {
-    const { name, user_email } = useSelector((state: RootState) => state.user)
+    const { name, user_email, id } = useSelector((state: RootState) => state.user)
     const [ userContacts, setUserContacts ] = useState([])
     const dispatch = useDispatch()
     const router = useRouter()
@@ -43,8 +44,16 @@ const Menu = () => {
                     {userContacts!.map((chat: any) => {
                         return (
                             <article className=" border-b border-slate-200 h-24 px-6 py-4" onClick={() => {
+                                dispatch(setLoadingTrue())
                                 dispatch(changeChat({anotherUser: chat.anotherUser, anotherEmail: chat.anotherUser_email}))
-                                router.push(`/home/${chat.anotherUser_email}`)
+                                axios.get(`${url}`).then((data) => {
+                                    axios.get(`${url}/${id}/getMessages/${data.data.filter((user: any) => user.user_email === chat.anotherUser_email)[0]._id}`).then((messagesRes) => {
+                                        dispatch(actualMessages(messagesRes.data.chats.filter((user: any) => user.anotherUser_email === chat.anotherUser_email)[0].messages))
+                                        console.log(messagesRes.data.chats.filter((user: any) => user.anotherUser_email === chat.anotherUser_email)[0])
+                                        router.push(`/home/${chat.anotherUser_email}`)
+                                        dispatch(setLoadingFalse())
+                                    })
+                                })
                             }}>
                                 <h1 className=" text-lg font-medium">{chat.anotherUser}</h1>
                                 <h2>{chat.anotherUser_email}</h2>
