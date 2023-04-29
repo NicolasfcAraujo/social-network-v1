@@ -6,7 +6,7 @@ import Menu from "@/components/Menu/Menu"
 import Posts from "@/components/Posts/Posts"
 import { setIsMenu } from "@/redux/features/userSlice"
 
-const index = () => {
+const Index = () => {
     const { name, isMenu, isWidthMobile } = useSelector((state: RootState) => state.user)
     const router = useRouter()
     const dispatch = useDispatch()
@@ -26,4 +26,4 @@ const index = () => {
         </main>
     )
 }
-export default index
+export default Index

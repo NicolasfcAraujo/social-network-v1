@@ -39,7 +39,7 @@ const AddFriendComponent = () => {
                         </div>
                     }
                     { isWidthMobile || <h2 className="pb-6 text-xl">Add Friends</h2>}
-                    {response!.data.map((user: any) => {
+                    {response!.data.map((user: any, index: number) => {
                         if(chats.includes(user.user_email)){
                             return
                         }
@@ -48,7 +48,7 @@ const AddFriendComponent = () => {
                         }
 
                         return (
-                            <div className="flex justify-between w-80 p-4 mb-6 border border-slate-200 rounded">
+                            <div key={index} className="flex justify-between w-80 p-4 mb-6 border border-slate-200 rounded">
                                 <div>
                                     <h1>{user.user_name}</h1>
                                     <h2>{user.user_email}</h2>

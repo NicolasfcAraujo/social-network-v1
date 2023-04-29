@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 const url = "https://social-network-api-b728.onrender.com/api/users"
 
-const index = () => {
+const Index = () => {
     const { name, id, actualChat, messages, isLoading, isMenu, isWidthMobile } = useSelector((state: RootState) => state.user)
     /*const [ messages, setMessages ] = useState<{text: string, who: string}[]>([])**/
     const router = useRouter()
@@ -88,4 +88,4 @@ const index = () => {
         </main>
     )
 }
-export default index
+export default Index

@@ -6,7 +6,7 @@ import Menu from "@/components/Menu/Menu"
 import AddFriendComponent from "@/components/AddFriendComponent/AddFriendComponent"
 import { setIsMenu } from "@/redux/features/userSlice"
 
-const index = () => {
+const Index = () => {
     const { name, id, isMenu, isWidthMobile } = useSelector((state: RootState) => state.user)
     const router = useRouter()
     const dispatch = useDispatch()
@@ -29,4 +29,4 @@ const index = () => {
         </main>
     )
 }
-export default index
+export default Index

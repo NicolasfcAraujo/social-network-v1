@@ -58,9 +58,9 @@ const Menu = () => {
             </div>
             <div className="flex flex-col justify-center">
                 <div>
-                    {userContacts!.map((chat: any) => {
+                    {userContacts!.map((chat: any, index: number) => {
                         return (
-                            <article className=" border-b border-slate-200 h-24 px-6 py-4" onClick={() => {
+                            <article key={index} className=" border-b border-slate-200 h-24 px-6 py-4" onClick={() => {
                                 dispatch(setLoadingTrue())
                                 dispatch(setIsMenu(false))
                                 dispatch(changeChat({anotherUser: chat.anotherUser, anotherEmail: chat.anotherUser_email}))

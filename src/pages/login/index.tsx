@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 
 type screenType = "smartphone" | "tablet" | "desktop" 
 
-const index = () => {
+const Index = () => {
   const [widthSize, setWidthSize] = useState<screenType>()
 
   const handleCheckWidth = () => {
@@ -41,4 +41,4 @@ const index = () => {
       </main>
     )
   }
-  export default index
+  export default Index
