@@ -51,7 +51,7 @@ const Menu = () => {
                     <div onClick={() => router.push("/home")}>
                         <button className="bg-black px-2 py-1 text-white w-24 rounded flex justify-between items-center">
                             <i className="fa-solid fa-house"></i>
-                            <h1>Home</h1>
+                            <h1 onClick={() => {dispatch(setIsMenu(false))}}>Home</h1>
                         </button>
                     </div>
                 </div>
@@ -79,7 +79,10 @@ const Menu = () => {
                         )
                     })}
                 </div>
-                <button onClick={() => router.push("/home/addFriends")} className="mx-6 my-4 px-2 py-1 bg-black text-white flex justify-between items-center rounded">
+                <button onClick={() => {
+                    router.push("/home/addFriends")
+                    dispatch(setIsMenu(false))
+                    }} className="mx-6 my-4 px-2 py-1 bg-black text-white flex justify-between items-center rounded">
                     <i className="fa-solid fa-user"></i>
                     <h1>Add friends</h1>
                 </button>

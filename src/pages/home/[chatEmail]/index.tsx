@@ -31,7 +31,9 @@ const index = () => {
         }
         handleGetMessages()
     })
-
+    useEffect(() => {
+        dispatch(setIsMenu(false))
+    }, [])
 
 
     return (

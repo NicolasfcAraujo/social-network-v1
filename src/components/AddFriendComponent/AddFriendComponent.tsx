@@ -1,4 +1,4 @@
-import { addChat } from "@/redux/features/userSlice"
+import { addChat, setIsMenu } from "@/redux/features/userSlice"
 import { RootState } from "@/redux/store"
 import axios, { AxiosResponse } from "axios"
 import { useRouter } from "next/router"
@@ -11,7 +11,7 @@ const AddFriendComponent = () => {
     const [ isLoading, setIsLoading ] = useState<boolean>(true)
     const [ response, setResponse ] = useState<AxiosResponse | null | undefined>()
     const [ error, setError ] = useState(null)
-    const { id, name, user_email, chats } = useSelector((state: RootState) => state.user)
+    const { id, name, user_email, chats, isWidthMobile } = useSelector((state: RootState) => state.user)
     const router = useRouter()
     const dispatch = useDispatch()
 
@@ -32,6 +32,13 @@ const AddFriendComponent = () => {
                 </div>
             :
                 <div className="p-6">
+                    { isWidthMobile &&
+                        <div onClick={() => {dispatch(setIsMenu(true))}} className="flex justify-start items-center text-xl pb-6 cursor-pointer" >
+                            <i className="fa-solid fa-arrow-left"></i>
+                            <h2 className="pl-6">Add Friends</h2>
+                        </div>
+                    }
+                    { isWidthMobile || <h2 className="pb-6 text-xl">Add Friends</h2>}
                     {response!.data.map((user: any) => {
                         if(chats.includes(user.user_email)){
                             return
