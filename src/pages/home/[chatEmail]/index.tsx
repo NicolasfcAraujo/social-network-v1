@@ -60,7 +60,7 @@ const Index = () => {
                         </div>
                     :
                         <div style={{height: "calc(100vh - 57.6px - 88px)"}} className=" overflow-y-scroll">
-                            {messages.map((message) => {
+                            {messages.map((message, index) => {
                                 let side = ""
                                 let color = ""
 
@@ -73,7 +73,7 @@ const Index = () => {
                                 }
 
                                 return (
-                                    <div style={{display: "flex", justifyContent: side}} className=" p-4">
+                                    <div key={index} style={{display: "flex", justifyContent: side}} className=" p-4">
                                         <article style={{background: color, color: "white", maxWidth: "80%"}} className=" px-4 pt-4 pb-5 rounded">
                                             {message.text}
                                         </article>    
