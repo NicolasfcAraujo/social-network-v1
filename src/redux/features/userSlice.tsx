@@ -1,8 +1,8 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { PayloadAction, createSlice } from "@reduxjs/toolkit"
 import axios from "axios"
 
-export type SliceState = { name: String | undefined, user_email: string | undefined, isLogged: Boolean, exp: number, id: string, chats: string[], actualChat: { anotherUser: string, anotherEmail: string }, messages: {text: string, who: string}[], isLoading: boolean}
-const initialState: SliceState = { name: "", user_email: "",isLogged: false, exp: 0, id: "", chats: [], actualChat: { anotherUser: "", anotherEmail: "" }, messages: [], isLoading: false}
+export type SliceState = { name: String | undefined, user_email: string | undefined, isLogged: Boolean, exp: number, id: string, chats: string[], actualChat: { anotherUser: string, anotherEmail: string }, messages: {text: string, who: string}[], isLoading: boolean, isMenu: boolean, isWidthMobile: boolean}
+const initialState: SliceState = { name: "", user_email: "",isLogged: false, exp: 0, id: "", chats: [], actualChat: { anotherUser: "", anotherEmail: "" }, messages: [], isLoading: false, isMenu: false, isWidthMobile: false}
 
 type UserType = {
     user_name: string | undefined,
@@ -17,15 +17,6 @@ type UserLogin = {
 }
 
 const url = "https://social-network-api-b728.onrender.com/api/users"
-
-export const loginAsync = createAsyncThunk(
-    "user/login", 
-    async (body) => {
-        const serverLogin = await axios.post(`${url}/login`, body)
-        console.log(serverLogin)
-        return serverLogin
-    }
-)
 
 export const slice = createSlice({
     name: "user",
@@ -71,15 +62,15 @@ export const slice = createSlice({
         },
         setLoadingFalse: (state) => {
             state.isLoading = false
+        },
+        setIsMenu: (state, action) => {
+            state.isMenu = action.payload
+        },
+        setIsWidthMobile: (state, action) => {
+            state.isWidthMobile = action.payload
         }
-    },
-    extraReducers: (builder) => {
-        builder.addCase(loginAsync.fulfilled, (state, action) => {
-            state.isLogged = true
-            console.log(action.payload)
-        })
     }
 })
 
-export const { changeUser, logout, createUser, addChat, changeChat, actualMessages, setLoadingTrue, setLoadingFalse } = slice.actions
+export const { changeUser, logout, createUser, addChat, changeChat, actualMessages, setLoadingTrue, setLoadingFalse, setIsMenu, setIsWidthMobile } = slice.actions
 export default slice.reducer

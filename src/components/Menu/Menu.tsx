@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/redux/store"
-import { changeChat, logout, actualMessages, setLoadingTrue, setLoadingFalse } from "@/redux/features/userSlice"
+import { changeChat, logout, actualMessages, setLoadingTrue, setLoadingFalse, setIsMenu, setIsWidthMobile } from "@/redux/features/userSlice"
 import { useRouter } from "next/router"
 import axios, { AxiosResponse } from "axios"
 import { useState, useEffect } from "react"
@@ -9,10 +9,20 @@ import Link from "next/link"
 const url = "https://social-network-api-b728.onrender.com/api/users"
 
 const Menu = () => {
-    const { name, user_email, id } = useSelector((state: RootState) => state.user)
+    const { name, user_email, id, isMenu, isWidthMobile} = useSelector((state: RootState) => state.user)
     const [ userContacts, setUserContacts ] = useState([])
     const dispatch = useDispatch()
     const router = useRouter()
+
+    const handleCheckWidth = () => {
+        if (window.innerWidth < 750) {
+            dispatch(setIsWidthMobile(true))
+            dispatch(setIsMenu(true))
+        } else {
+            dispatch(setIsWidthMobile(false))
+            dispatch(setIsMenu(false))
+        }
+    }
 
     useEffect(() => {
         axios.get("https://social-network-api-b728.onrender.com/api/users").then((data) => {
@@ -21,8 +31,15 @@ const Menu = () => {
         })
     },[])
 
+    useEffect(() => handleCheckWidth(), [])
+    useEffect(() => {
+        window.addEventListener("resize", () => {
+            handleCheckWidth()
+        })
+    })
+
     return (
-        <div className="border-r border-slate-200 h-screen">
+        <div className={ isWidthMobile ? isMenu ? "showMenu border-r border-slate-200 h-screen" : "hideMenu border-r border-slate-200 h-screen" : "border-r border-slate-200 h-screen"} style={{width: "300px", zIndex: "100", background: "white"}}>
             <div className=" bg-black flex justify-center items-center">
                 <h1 className="text-white font-medium text-4xl p-6" >social network</h1>
             </div>
@@ -45,6 +62,7 @@ const Menu = () => {
                         return (
                             <article className=" border-b border-slate-200 h-24 px-6 py-4" onClick={() => {
                                 dispatch(setLoadingTrue())
+                                dispatch(setIsMenu(false))
                                 dispatch(changeChat({anotherUser: chat.anotherUser, anotherEmail: chat.anotherUser_email}))
                                 axios.get(`${url}`).then((data) => {
                                     axios.get(`${url}/${id}/getMessages/${data.data.filter((user: any) => user.user_email === chat.anotherUser_email)[0]._id}`).then((messagesRes) => {

@@ -71,3 +71,26 @@
     color: white;
   }
 }
+
+.hideMenu {
+  position: absolute;
+  left: -300px;
+}
+
+.showMenu {
+  animation-name: menuShowAnimation;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes menuShowAnimation {
+  0% {
+    position: absolute;
+    left: -300px
+  }
+
+  100% {
+    position: absolute;
+    left: 0;
+  }
+}

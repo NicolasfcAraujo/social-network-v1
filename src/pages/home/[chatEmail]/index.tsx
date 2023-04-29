@@ -1,6 +1,6 @@
 import Menu from "@/components/Menu/Menu"
 import TextSpace from "@/components/TextSpace/TextSpace"
-import { actualMessages } from "@/redux/features/userSlice"
+import { actualMessages, setIsMenu, setIsWidthMobile } from "@/redux/features/userSlice"
 import { RootState } from "@/redux/store"
 import loading from "../../../../public/loadingGIF.gif"
 import Image from "next/image"
@@ -12,11 +12,10 @@ import { useDispatch, useSelector } from "react-redux"
 const url = "https://social-network-api-b728.onrender.com/api/users"
 
 const index = () => {
-    const { name, id, actualChat, messages, isLoading } = useSelector((state: RootState) => state.user)
+    const { name, id, actualChat, messages, isLoading, isMenu, isWidthMobile } = useSelector((state: RootState) => state.user)
     /*const [ messages, setMessages ] = useState<{text: string, who: string}[]>([])**/
     const router = useRouter()
     const dispatch = useDispatch()
-    
 
     const handleGetMessages = () => {
         axios.get(`${url}`).then((data) => {
@@ -30,20 +29,28 @@ const index = () => {
         if(name === ""){
             router.push("/")
         }
-    })
-
-    useEffect(() => {
         handleGetMessages()
     })
 
+
+
     return (
-        <main style={{display: "grid", gridTemplateColumns: "300px 1fr"}}>
-            <Menu/>
+        <main style={{display: "grid", gridTemplateColumns: `${isWidthMobile ? "1fr" : "300px 1fr"}`}}>
+            <div style={{ background: `${isWidthMobile ? isMenu ? "rgb(0,0,0,0.1)" : "" : ""}`, zIndex: `${isWidthMobile ? isMenu ? "10": "" : ""}`}} className={isWidthMobile ? isMenu ? "fixed h-screen w-screen top-0 left-0" : "" : ""}>
+                <Menu/>
+            </div>
             <section>
                 <div style={{height: "calc(100vh - 57.6px)"}}>
-                    <div className=" p-4 bg-gray-400" style={{height: "88px"}}>
-                        <h1 className=" text-lg font-medium">{actualChat.anotherUser}</h1>
-                        <h2>{actualChat.anotherEmail}</h2>
+                    <div className=" py-4 bg-gray-400 flex" style={{height: "88px"}}>
+                        { isWidthMobile &&
+                            <div onClick={() => dispatch(setIsMenu(true))} className="flex justify-center items-center pl-6 text-xl" >
+                                <i className="fa-solid fa-arrow-left"></i>
+                            </div>
+                        }
+                        <div className=" pl-6">
+                            <h1 className=" text-lg font-medium">{actualChat.anotherUser}</h1>
+                            <h2>{actualChat.anotherEmail}</h2>
+                        </div>   
                     </div>
                     {isLoading ?
                         <div style={{height: "calc(100vh - 57.6px - 88px)"}} className="flex justify-center items-center">
