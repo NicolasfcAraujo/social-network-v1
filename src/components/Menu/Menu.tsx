@@ -14,12 +14,24 @@ const Menu = () => {
     const dispatch = useDispatch()
     const router = useRouter()
 
+    const handleCheckWidth = () => {
+        if (window.innerWidth < 750) {
+            dispatch(setIsWidthMobile(true))
+            dispatch(setIsMenu(true))
+        } else {
+            dispatch(setIsWidthMobile(false))
+            dispatch(setIsMenu(false))
+        }
+    }
+
     useEffect(() => {
         axios.get("https://social-network-api-b728.onrender.com/api/users").then((data) => {
             setUserContacts(data.data.filter((user: any) => user.user_email === user_email)[0].chats)
             console.log(data.data.filter((user: any) => user.user_email === user_email)[0].chats)
         })
     },[])
+
+    useEffect(() => handleCheckWidth(), [])
 
     return (
         <div className={ isWidthMobile ? isMenu ? "showMenu border-r border-slate-200 h-screen" : "hideMenu border-r border-slate-200 h-screen" : "border-r border-slate-200 h-screen"} style={{width: "300px", zIndex: "100", background: "white"}}>
